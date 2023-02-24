@@ -1,0 +1,59 @@
+#Project info
+#Pattern - MVC
+#Is Flow flutter Standard theme UI ? - Yes
+#State-Management - GetX
+#Flutter Doctor info
+#-------------------
+#[√] Flutter (Channel stable, 3.3.2, on Microsoft Windows [Version 10.0.19044.2486], locale en-IN)
+#Checking Android licenses is taking an unexpectedly long time...[√] Android toolchain - develop for Android devices (Android S
+#DK version 33.0.0)
+#[√] Chrome - develop for the web
+#[X] Visual Studio - develop for Windows
+#X Visual Studio not installed; this is necessary for Windows development.
+#Download at https://visualstudio.microsoft.com/downloads/.
+#Please install the "Desktop development with C++" workload, including all of its default components
+#[√] Android Studio (version 2021.2)
+#[√] Connected device (4 available)
+#[√] HTTP Host Availability
+
+name: demo_flutter
+description: A new Flutter project.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.1 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  # The following adds the Cupertino Icons font to your application
+  cupertino_icons: ^1.0.2
+
+  #DataBase Services Provider
+  shared_preferences: ^2.0.17
+
+  #UI
+  flutter_slidable: ^2.0.0
+
+  #Services
+  path: ^1.8.2
+
+  #State-Management
+  get: ^4.6.5
+
+  #Network
+  http: ^0.13.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+

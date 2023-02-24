@@ -1,8 +1,7 @@
 import 'dart:convert';
 
+import 'package:demo_flutter/utils/constant/strings.dart';
 import 'package:http/http.dart' as http;
-
-import '../utils/constant/strings.dart';
 
 class FormData {
   final String firstname;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:demo_flutter/controller/utils/constant/colors.dart';
+import 'package:demo_flutter/utils/constant/colors.dart';
 
 //All constant style are define in style const class.
 class StyleConst {

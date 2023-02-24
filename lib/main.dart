@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:demo_flutter/controller/utils/constant/colors.dart';
-import 'package:demo_flutter/controller/utils/route.dart';
+import 'package:demo_flutter/utils/constant/colors.dart';
+import 'package:demo_flutter/utils/route.dart';
 
 void main() async {
   runApp(const MyApp());

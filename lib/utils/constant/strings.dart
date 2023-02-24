@@ -1,6 +1,7 @@
 //all constant string which are used in app are define here.
 class StringConst {
   //Image Path String
+  static const String kLogoImage = 'assets/logo.png';
   static const String kLogo = 'assets/logo.png';
 
   //Sign Up Screen
@@ -28,33 +29,4 @@ class StringConst {
 
   static const String kSuccess = 'Success';
 
-  //home screen
-  static const String kPleaseDefine = 'Please define your available dates\nand times.';
-  static const String kManageAvailability = 'Manage Availability';
-  static const String kMonday = 'Monday';
-
-  static const List<String> timeslots = [
-    "9:00-9:30 AM",
-    "9:30-10:00 AM",
-    "10:00-10:30 AM",
-    "10:30-11:00 AM",
-    "11:00-11:30 AM",
-    "11:30-12:00 AM",
-    "12:00-12:30 AM",
-    "12:30-1:00 AM",
-    "1:00-1:30 AM",
-    "1:30-2:00 AM",
-    "2:00-2:30 AM",
-    "2:30-3:00 AM"
-  ];
-
-  static const daysName = [
-    ['Monday'],
-    ['Tuesday'],
-    ['Wednesday'],
-    ['Thursday'],
-    ['Friday'],
-    ['Saturday'],
-    ['Sunday']
-  ];
 }

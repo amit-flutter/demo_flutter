@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:demo_flutter/controller/home_page.dart';
-import 'package:demo_flutter/controller/utils/constant/colors.dart';
-import 'package:demo_flutter/controller/utils/constant/widgets.dart';
+import 'package:demo_flutter/utils/constant/colors.dart';
+import 'package:demo_flutter/utils/constant/widgets.dart';
 import 'package:demo_flutter/view/widgets/custom_elevated_button.dart';
 
 class RepeatUntilAndSaveButton extends StatelessWidget {

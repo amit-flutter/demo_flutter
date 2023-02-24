@@ -1,10 +1,38 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-class SplashScreen extends StatelessWidget {
-  const SplashScreen ({Key? key}) : super(key: key);
+import 'package:demo_flutter/utils/constant/colors.dart';
+import 'package:demo_flutter/utils/constant/strings.dart';
+import 'package:demo_flutter/utils/route.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    setup();
+    super.initState();
+  }
+
+  void setup() async {
+    // CentralController centralController = Get.find();
+    // centralController.isLogin = await Preferences.isLogin();
+
+    //After 2 seconds Splash screen remove and new screen will be added.(Control transfer from one to another)
+    Timer(const Duration(seconds: 2), () => Get.toNamed(RouteConst.kRegister));
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: ThemeConst.kHighLight1,
+      body: Center(child: Image.asset(StringConst.kLogoImage)),
+    );
   }
 }

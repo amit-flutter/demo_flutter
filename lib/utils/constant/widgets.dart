@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:demo_flutter/controller/utils/constant/colors.dart';
-import 'package:demo_flutter/controller/utils/constant/sizes.dart';
+import 'package:demo_flutter/utils/constant/colors.dart';
+import 'package:demo_flutter/utils/constant/sizes.dart';
 
 //Widget const class define pre-define (default) widget used in app.
 class WidgetConst {

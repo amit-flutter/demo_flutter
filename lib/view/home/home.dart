@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:demo_flutter/controller/utils/constant/sizes.dart';
-import 'package:demo_flutter/controller/utils/constant/strings.dart';
-import 'package:demo_flutter/controller/utils/constant/style.dart';
-import 'package:demo_flutter/controller/utils/constant/widgets.dart';
+import 'package:demo_flutter/utils/constant/sizes.dart';
+import 'package:demo_flutter/utils/constant/strings.dart';
+import 'package:demo_flutter/utils/constant/style.dart';
+import 'package:demo_flutter/utils/constant/widgets.dart';
 import 'package:demo_flutter/view/home/widget/repeat_until_save_button.dart';
 
 enum Schedule { daily, timeslot }
@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: WidgetConst.kDefaultText(
-          textString: StringConst.kManageAvailability,
+          textString: "StringConst.kManageAvailability",
           textStyle: StyleConst.kBlack18Normal,
         ),
       ),

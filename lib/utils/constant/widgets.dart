@@ -7,11 +7,14 @@ import 'package:demo_flutter/utils/constant/sizes.dart';
 class WidgetConst {
   static BorderRadius defaultBorderRadius = BorderRadius.circular(SizeConst.kDefaultRadius);
   static const TextStyle highLight1White20 = TextStyle(fontSize: 20, color: ThemeConst.kLightBackGround);
+
   static const TextStyle highLight1Bold20 =
       TextStyle(fontSize: 20, color: ThemeConst.kHighLight1, fontWeight: FontWeight.bold);
   static const TextStyle highLight1Bold18 =
       TextStyle(fontSize: 18, color: ThemeConst.kHighLight1, fontWeight: FontWeight.bold);
   static const TextStyle highLight1Bold16 = TextStyle(fontSize: 16, color: ThemeConst.kHighLight2Black);
+
+  static const TextStyle kHighLight2Bold16 = TextStyle(fontSize: 16, color: ThemeConst.kHighLight2White);
 
   static SizedBox kHeightSpacer({double heightMultiplier = 1}) {
     return SizedBox(height: SizeConst.kDefaultPadding * heightMultiplier);

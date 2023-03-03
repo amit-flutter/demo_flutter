@@ -9,6 +9,7 @@ class CustomElevatedButton extends StatelessWidget {
     required this.title,
     required this.onClick,
     this.width = 40,
+    this.radius = 10,
     this.foreColor = ThemeConst.kHighLight1,
     this.backColor = ThemeConst.kHighLight3DeepBlue,
     this.isOutlineButton = false,
@@ -16,6 +17,7 @@ class CustomElevatedButton extends StatelessWidget {
   final String title;
   final Function onClick;
   final double width;
+  final double radius;
   final Color foreColor;
   final Color backColor;
   final bool isOutlineButton;
@@ -31,7 +33,7 @@ class CustomElevatedButton extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   foregroundColor: foreColor,
                   backgroundColor: backColor,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(radius))),
               child: WidgetConst.kButtonText(textString: title),
             )
           : OutlinedButton(
@@ -42,44 +44,3 @@ class CustomElevatedButton extends StatelessWidget {
     );
   }
 }
-
-// class CustomElevatedButtonWithChild extends StatelessWidget {
-//   const CustomElevatedButtonWithChild({
-//     Key? key,
-//     required this.child,
-//     required this.onClick,
-//     this.height = 40,
-//     this.foreColor = ColorConst.kBackgroundLight,
-//     this.backColor = ColorConst.kHighLight1,
-//     this.isOutlineButton = false,
-//   }) : super(key: key);
-//   final Widget child;
-//   final Function() onClick;
-//   final double height;
-//   final Color foreColor;
-//   final Color backColor;
-//   final bool isOutlineButton;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Flexible(
-//       child: SizedBox(
-//         height: 40,
-//         child: !isOutlineButton
-//             ? ElevatedButton(
-//           onPressed: onClick,
-//           style: ElevatedButton.styleFrom(
-//             foregroundColor: foreColor,
-//             backgroundColor: backColor,
-//           ),
-//           child: child,
-//         )
-//             : OutlinedButton(
-//           onPressed: () => onClick(),
-//           style: OutlinedButton.styleFrom(side: const BorderSide(width: 2.0, color: ColorConst.kHighLight1)),
-//           child: child,
-//         ),
-//       ),
-//     );
-//   }
-// }

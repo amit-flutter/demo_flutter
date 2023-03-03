@@ -7,7 +7,8 @@ class ThemeConst {
   static const Color kLightBackGround = Color.fromRGBO(241, 241, 241, 1);
 
   static const Color kHighLight1 = Color(0xFF60A053);
-  static const Color kHighLight2 = Color(0xfacfcfda);
+  static const Color kHighLight2 = Color(0xfaffffff);
+  static const Color kHighLight3 = Color(0xFF529344);
   static const Color kHighLight2Black = Colors.black;
   static const Color kHighLight3DeepBlue = Color.fromRGBO(35, 60, 91, 1);
 
@@ -19,16 +20,11 @@ class ThemeConst {
   static const Color kHighLight3Black = Color.fromRGBO(0, 0, 0, 1);
   static const Color kHighLight4DarkGray = Color.fromRGBO(137, 145, 173, 1);
   static const Color kHighLight5LightBlue = Color.fromRGBO(160, 174, 225, 1);
-  static const Color kHighLight6Gray = Color.fromRGBO(213, 213, 213, 1);
 
   //Light Theme data is define here
   static ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: kLightBackGround,
 
-    textTheme: const TextTheme(
-      subtitle1: StyleConst.kTeal18Normal, //USE: Text-field Input,
-      headline4: TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: kYellow),
-    ),
     radioTheme: RadioThemeData(fillColor: MaterialStateColor.resolveWith((states) => kHighLight1)),
 
     inputDecorationTheme: InputDecorationTheme(
@@ -59,10 +55,11 @@ class ThemeConst {
     cardColor: kHighLight2White,
     appBarTheme: const AppBarTheme(
       iconTheme: IconThemeData(color: kHighLight1, size: 30),
-      backgroundColor: ThemeConst.kLightBackGround,
+      backgroundColor: ThemeConst.kHighLight1,
       elevation: 0,
       centerTitle: true,
     ),
+    listTileTheme: const ListTileThemeData(iconColor: kHighLight3Black),
     iconTheme: const IconThemeData(color: kHighLight1, size: 30),
     colorScheme: ColorScheme.light(
       secondary: kHighLight5LightBlue.withOpacity(0.7),
@@ -82,11 +79,6 @@ class ThemeConst {
   static ThemeData darkTheme = ThemeData(
     //New
     scaffoldBackgroundColor: kLightBackGround,
-
-    textTheme: const TextTheme(
-      subtitle1: StyleConst.kTeal18Normal, //USE: Text-field Input,
-      headline4: TextStyle(fontSize: 30, fontWeight: FontWeight.w600, color: kYellow),
-    ),
     radioTheme: RadioThemeData(fillColor: MaterialStateColor.resolveWith((states) => kHighLight1)),
 
     inputDecorationTheme: InputDecorationTheme(

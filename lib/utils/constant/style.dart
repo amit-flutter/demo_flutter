@@ -5,21 +5,19 @@ import 'package:demo_flutter/utils/constant/colors.dart';
 class StyleConst {
   //TextFieldBorder
   static OutlineInputBorder outLineBorderStyle = OutlineInputBorder(
-    borderSide: const BorderSide(color: ThemeConst.kHighLight3DeepBlue, width: 2),
+    borderSide: const BorderSide(color: ThemeConst.kHighLight1, width: 2),
     borderRadius: BorderRadius.circular(10),
   );
 
   //TextStyle
   static const TextStyle kBlack18Normal = TextStyle(color: ThemeConst.kHighLight3Black, fontSize: 18);
-  static const TextStyle kBlack18Bold =
-      TextStyle(color: ThemeConst.kHighLight3Black, fontSize: 18, fontWeight: FontWeight.bold);
-  static const TextStyle kHintText = TextStyle(color: ThemeConst.kHighLight4DarkGray);
 
   static const TextStyle kTeal18Normal = TextStyle(color: ThemeConst.kHighLight1, fontSize: 18);
   static const TextStyle kTeal18Bold =
       TextStyle(color: ThemeConst.kHighLight1, fontSize: 18, fontWeight: FontWeight.bold);
-
   static const TextStyle kHighLight1Normal = TextStyle(color: ThemeConst.kHighLight1, fontSize: 18);
-  static const TextStyle kDeepBlue18Bold =
-      TextStyle(color: ThemeConst.kHighLight1, fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1.2);
+
+
+  static const TextStyle kHighLight216 = TextStyle(fontSize: 16, color: ThemeConst.kHighLight2White);
+  static const TextStyle kHighLight214 = TextStyle(fontSize: 14, color: ThemeConst.kHighLight2White);
 }

@@ -54,4 +54,10 @@ class StringConst {
   static const String kLeadTag = 'Lead';
   static const String kSubmit = 'Submit';
   static const String kCancel = 'Cancel';
+
+  //Lead
+  static const String kReset = 'Reset';
+  static const String kApply = 'Apply';
+  static const String kFilter = 'Filter';
+  static const String kFilterBy = 'Filter by';
 }

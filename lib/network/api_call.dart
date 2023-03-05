@@ -39,7 +39,7 @@ class FormData {
 class GetApiCall {
   AppCommonController appCommonController = Get.put(AppCommonController());
 
-  Future getData() async {
+  Future getLeadData() async {
     final response = await http.get(Uri.parse("${ApiDetails.kBaseAPI}${ApiDetails.kGetLeadDataAPI}"), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -48,17 +48,30 @@ class GetApiCall {
     var responseData = json.decode(response.body);
     List lead = responseData['data']['lead'];
     appCommonController.leadData.value = lead;
+    appCommonController.tempLeadData.value = lead;
     log("${lead.length}");
-    log("${lead.first}");
+    log("${lead[2]}");
     // { customer_id: 1, cmp_id: 4, cmp_name: iboon, contact_name: KENA J RANA, designation: CA , mobile_no:
     // 9898989090, mobile_no2: , email: KENA@gmail.com, website: WWW.IBOON.CO.IN, address: Sola, Ahmedabad,
     // address2: , city: ahmedabad, state: GUJARAT, country: India, pincode: 380056, note: NO, status: 4,
     // promotion_id: 8, referral_id: 7, followDate: 2022-10-28, dob: null, doa: null, user_id: 4, assign_user_id:
     // null, product_id: 6, service_id: 6, created_by: practical, created_time_date: 2022-09-28 15:57:58,
     // updated_by: null, updated_time_date: 2022-09-28 03:57:56, delete_data: 1, app_user_id: null}
-
-
     return responseData;
+  }
+
+  Future getLeadCountData() async {
+    final response = await http.get(Uri.parse("${ApiDetails.kBaseAPI}${ApiDetails.kGetLeadCountDataAPI}"), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${ApiDetails.kDemoToken}',
+    });
+    var responseData = json.decode(response.body);
+    print(responseData);
+    // {status: true, message: Lead Count Listed, data: {lead_count: 7}}
+    int leadCount = responseData['data']['lead_count'];
+    appCommonController.leadCount.value = leadCount;
+    return leadCount;
   }
 }
 
@@ -90,7 +103,8 @@ class PostApiCall {
         appCommonController.currentUser.value = currentUser;
         return StringConst.kSuccess;
       } else {
-        return response.body;
+        var errorMessage = json.decode(response.body);
+        return errorMessage['message'];
       }
     } catch (e) {
       return '$e';

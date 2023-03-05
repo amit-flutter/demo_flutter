@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:demo_flutter/utils/constant/style.dart';
+import 'package:flutter/material.dart';
 
 //ThemeConst class will contain all color and theme info.
 class ThemeConst {
@@ -27,6 +27,11 @@ class ThemeConst {
     scaffoldBackgroundColor: kLightBackGround,
 
     radioTheme: RadioThemeData(fillColor: MaterialStateColor.resolveWith((states) => kHighLight1)),
+
+    checkboxTheme: CheckboxThemeData(
+      checkColor: MaterialStateProperty.all(Colors.black),
+      fillColor: MaterialStateProperty.all(Colors.white),
+    ),
 
     inputDecorationTheme: InputDecorationTheme(
       alignLabelWithHint: true,

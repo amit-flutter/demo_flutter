@@ -1,6 +1,5 @@
 import 'package:demo_flutter/controller/app_common_controller.dart';
 import 'package:demo_flutter/utils/constant/colors.dart';
-import 'package:demo_flutter/utils/constant/sizes.dart';
 import 'package:demo_flutter/utils/constant/strings.dart';
 import 'package:demo_flutter/utils/constant/style.dart';
 import 'package:demo_flutter/utils/constant/widgets.dart';
@@ -12,11 +11,12 @@ import 'package:get/get.dart';
 class LeadScreen extends StatelessWidget {
   LeadScreen({Key? key}) : super(key: key);
 
-  AppCommonController appCommonController = Get.put(AppCommonController());
+  AppCommonController appCommonController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //App Bar Contains Side-Drawer and Add Lead Icon
       appBar: AppBar(
         leading: Builder(builder: (context) {
           return InkWell(onTap: () => Scaffold.of(context).openDrawer(), child: Image.asset(StringConst.kSideMenuIcon));
@@ -33,12 +33,14 @@ class LeadScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            //Search - Filter and Sort Icon
             SearchAndSortWidget(),
+            //Lead ListView
             Expanded(
               child: Obx(() {
                 return ListView.builder(
                     itemCount: appCommonController.leadData.length,
-                    padding: const EdgeInsets.all(15),
+                    padding: const EdgeInsets.only(left: 15, right: 10, top: 15, bottom: 15),
                     itemBuilder: (BuildContext context, int index) {
                       return Card(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -64,12 +66,17 @@ class LeadScreen extends StatelessWidget {
                                     WidgetConst.kDefaultText(
                                         textString: appCommonController.leadData[index]['website'].toString(),
                                         textStyle: StyleConst.kHighLight4DarkGray16),
-                                    WidgetConst.kDefaultText(
-                                        textString: appCommonController.leadData[index]['followDate'].toString(),
-                                        textStyle: StyleConst.kHighLight4DarkGray16),
+                                    Obx(() {
+                                      return WidgetConst.kDefaultText(
+                                          textString: appCommonController.leadData[index]['followDate'].toString(),
+                                          textStyle: appCommonController.isSort.value
+                                              ? StyleConst.kBlack18Normal
+                                              : StyleConst.kHighLight4DarkGray16);
+                                    }),
                                   ],
                                 ),
                               ),
+                              //Side Status Button
                               SizedBox(
                                 width: 150,
                                 height: 32,
@@ -97,6 +104,7 @@ class SearchAndSortWidget extends StatelessWidget {
   SearchAndSortWidget({super.key});
 
   AppCommonController appCommonController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -110,7 +118,7 @@ class SearchAndSortWidget extends StatelessWidget {
             child: TextField(
               keyboardType: TextInputType.name,
               decoration: InputDecoration(
-                  suffixIcon: Icon(Icons.search),
+                  suffixIcon: const Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderSide: const BorderSide(color: ThemeConst.kHighLight6LightGray, width: 1),
                     borderRadius: BorderRadius.circular(10),
@@ -127,43 +135,14 @@ class SearchAndSortWidget extends StatelessWidget {
           ),
 
           //Filter Icon
-          Stack(
-            alignment: Alignment.topRight,
-            children: [
-              Container(
-                margin: EdgeInsets.all(7),
-                padding: EdgeInsets.all(10),
-                child: Hero(tag: StringConst.kLeadTag, child: Image.asset(StringConst.kLeadIcon)),
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  border: Border.all(color: ThemeConst.kHighLight4DarkGray, width: 2),
-                  color: ThemeConst.kHighLight6LightGray,
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: ThemeConst.kHighLight3,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                height: 20,
-                width: 20,
-                child: Center(child: WidgetConst.kDefaultText(textString: "2", textStyle: StyleConst.kHighLight214)),
-              )
-            ],
-          ),
-
-          //Sort Icon
-          Stack(
-            alignment: Alignment.topRight,
-            children: [
-              InkWell(
-                onTap: () => appCommonController.sortLeadDataByFormatDate(),
-                child: Container(
-                  margin: EdgeInsets.all(7),
-                  padding: EdgeInsets.all(10),
-                  child: Image.asset(StringConst.kSortIcon),
+          InkWell(
+            onTap: () => showFilterOptions(context),
+            child: Stack(
+              alignment: Alignment.topRight,
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(7),
+                  padding: const EdgeInsets.all(10),
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
@@ -171,9 +150,8 @@ class SearchAndSortWidget extends StatelessWidget {
                     border: Border.all(color: ThemeConst.kHighLight4DarkGray, width: 2),
                     color: ThemeConst.kHighLight6LightGray,
                   ),
+                  child: Hero(tag: StringConst.kLeadTag, child: Image.asset(StringConst.kLeadIcon)),
                 ),
-              ),
-              if (false)
                 Container(
                   decoration: BoxDecoration(
                     color: ThemeConst.kHighLight3,
@@ -183,12 +161,221 @@ class SearchAndSortWidget extends StatelessWidget {
                   width: 20,
                   child: Center(child: WidgetConst.kDefaultText(textString: "2", textStyle: StyleConst.kHighLight214)),
                 )
-            ],
+              ],
+            ),
           ),
+
+          //Sort Icon
+          Obx(() {
+            return Stack(
+              alignment: Alignment.topRight,
+              children: [
+                InkWell(
+                  onTap: () => appCommonController.isSort.value
+                      ? appCommonController.resetLeadData()
+                      : appCommonController.sortLeadDataByFormatDate(),
+                  child: Container(
+                    margin: const EdgeInsets.all(7),
+                    padding: const EdgeInsets.all(10),
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      border: Border.all(color: ThemeConst.kHighLight4DarkGray, width: 2),
+                      color: ThemeConst.kHighLight6LightGray,
+                    ),
+                    child: Image.asset(StringConst.kSortIcon),
+                  ),
+                ),
+                if (appCommonController.isSort.value)
+                  Container(
+                    decoration: BoxDecoration(
+                      color: ThemeConst.kHighLight3,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    height: 20,
+                    width: 20,
+                    child: Center(
+                      child: Icon(Icons.check, size: 12, color: ThemeConst.kHighLight2White),
+                    ),
+                  ),
+              ],
+            );
+          }),
 
           WidgetConst.kWidthSpacer(widthMultiplier: 0.3),
         ],
       ),
+    );
+  }
+
+  void showFilterOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      elevation: 10,
+      // constraints: BoxConstraints(maxHeight: 350),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      builder: (BuildContext context) {
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //Filter Header
+              Container(
+                // height: 50,
+                color: ThemeConst.kHighLight1,
+                child: Column(
+                  children: [
+                    Container(margin: EdgeInsets.all(5), height: 3, width: 70, color: ThemeConst.kHighLight2White),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                              child: WidgetConst.kDefaultText(
+                                  textString: "Filter",
+                                  textAlign: TextAlign.start,
+                                  textStyle: StyleConst.kHighLight4DarkGray16.copyWith(
+                                      color: ThemeConst.kHighLight2White, fontSize: 20, fontWeight: FontWeight.bold))),
+                          SizedBox(
+                            height: 35,
+                            child: CustomElevatedButton(
+                              width: 80,
+                              title: StringConst.kReset,
+                              backColor: ThemeConst.kHighLight2White,
+                              buttonTextStle: StyleConst.kBlack18Normal,
+                              onClick: () {},
+                            ),
+                          ),
+                          WidgetConst.kWidthSpacer(),
+                          SizedBox(
+                            height: 35,
+                            child: CustomElevatedButton(
+                              width: 80,
+                              title: StringConst.kApply,
+                              backColor: ThemeConst.kHighLight2White,
+                              buttonTextStle: StyleConst.kBlack18Normal,
+                              onClick: () {},
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              //Filter Body
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    WidgetConst.kDefaultText(
+                        textString: StringConst.kFilterBy,
+                        textStyle: StyleConst.kBlack18Normal.copyWith(fontWeight: FontWeight.bold, fontSize: 20)),
+                    Card(
+                      margin: EdgeInsets.only(top: 10),
+                      elevation: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            WidgetConst.kDefaultText(
+                                textString: "Status",
+                                textStyle:
+                                    StyleConst.kBlack18Normal.copyWith(fontSize: 18, fontWeight: FontWeight.bold)),
+                            WidgetConst.kHeightSpacer(heightMultiplier: 0.5),
+                            Container(
+                              width: Get.width,
+                              height: 3,
+                              color: ThemeConst.kHighLight4DarkGray,
+                            ),
+                            Row(
+                              children: [
+                                Checkbox(value: false, onChanged: (val) {}),
+                                WidgetConst.kDefaultText(
+                                    textString: "Open (10)",
+                                    textStyle: StyleConst.kBlack18Normal.copyWith(fontSize: 18)),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Checkbox(value: true, onChanged: (val) {}),
+                                WidgetConst.kDefaultText(
+                                    textString: "Completed (5)",
+                                    textStyle: StyleConst.kBlack18Normal.copyWith(fontSize: 18)),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Checkbox(value: false, onChanged: (val) {}),
+                                WidgetConst.kDefaultText(
+                                    textString: "(Closed)",
+                                    textStyle: StyleConst.kBlack18Normal.copyWith(fontSize: 18)),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Card(
+                      margin: EdgeInsets.only(top: 10),
+                      elevation: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            WidgetConst.kDefaultText(
+                                textString: "Promotions",
+                                textStyle:
+                                    StyleConst.kBlack18Normal.copyWith(fontSize: 18, fontWeight: FontWeight.bold)),
+                            WidgetConst.kHeightSpacer(heightMultiplier: 0.5),
+                            Container(width: Get.width, height: 3, color: ThemeConst.kHighLight4DarkGray),
+                            Row(
+                              children: [
+                                Checkbox(value: false, onChanged: (val) {}),
+                                WidgetConst.kDefaultText(
+                                    textString: "GPBD", textStyle: StyleConst.kBlack18Normal.copyWith(fontSize: 18)),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Checkbox(value: false, onChanged: (val) {}),
+                                WidgetConst.kDefaultText(
+                                    textString: "JustDial",
+                                    textStyle: StyleConst.kBlack18Normal.copyWith(fontSize: 18)),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Checkbox(value: true, onChanged: (val) {}),
+                                WidgetConst.kDefaultText(
+                                    textString: "Newspapaer",
+                                    textStyle: StyleConst.kBlack18Normal.copyWith(fontSize: 18)),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Checkbox(value: false, onChanged: (val) {}),
+                                WidgetConst.kDefaultText(
+                                    textString: "GPBS", textStyle: StyleConst.kBlack18Normal.copyWith(fontSize: 18)),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }

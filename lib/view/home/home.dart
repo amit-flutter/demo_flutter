@@ -1,3 +1,8 @@
+// ignore_for_file: must_be_immutable
+
+import 'dart:io';
+
+import 'package:demo_flutter/controller/app_common_controller.dart';
 import 'package:demo_flutter/network/api_call.dart';
 import 'package:demo_flutter/utils/constant/colors.dart';
 import 'package:demo_flutter/utils/constant/sizes.dart';
@@ -5,7 +10,6 @@ import 'package:demo_flutter/utils/constant/strings.dart';
 import 'package:demo_flutter/utils/constant/style.dart';
 import 'package:demo_flutter/utils/constant/widgets.dart';
 import 'package:demo_flutter/utils/route.dart';
-import 'package:demo_flutter/view/home/widget/user_info.dart';
 import 'package:demo_flutter/view/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  AppCommonController appCommonController = Get.put(AppCommonController());
 
   @override
   void initState() {
@@ -25,25 +30,30 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  void dataLoad() async{
-    print("------------>");
+  //dataLoad Function will make API call and load lead data.
+  //data will be manage by app_common_controller
+  void dataLoad() async {
     GetApiCall getApiCall = GetApiCall();
-    var response = await getApiCall.getData();
-    // print(response.toString());
+    await getApiCall.getLeadData();
+    await getApiCall.getLeadCountData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //App Bar (Drawer menu and Notification icon)
       appBar: AppBar(
         leading: Builder(builder: (context) {
           return InkWell(onTap: () => Scaffold.of(context).openDrawer(), child: Image.asset(StringConst.kSideMenuIcon));
         }),
         actions: [Image.asset(StringConst.kNotificationIcon)],
       ),
+      //Side Drawer
       drawer: const CustomDrawer(),
+      //Main Body part (User Information - Lead - Task ... Card View)
       body: Stack(
         children: [
+          //Background Green Color Effect
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -55,34 +65,38 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(SizeConst.kDefaultPadding * 0.5),
             child: Column(
               children: [
+                //User image - Name - Edit Icon
                 UserInfo(),
                 WidgetConst.kHeightSpacer(heightMultiplier: 3),
-                Expanded(
-                  child: GridView.count(
-                      primary: false,
-                      padding: const EdgeInsets.all(20),
-                      crossAxisSpacing: 30,
-                      mainAxisSpacing: 30,
-                      crossAxisCount: 2,
-                      children: <Widget>[
-                        HomeCard(
-                          iconWidget: Hero(tag: StringConst.kLeadTag, child: Image.asset(StringConst.kLeadIcon)),
-                          title: StringConst.kLeads,
-                          isBudge: true,
-                          budgeNumber: "8",
-                          onTap: () => Get.toNamed(RouteConst.kLeadScreen),
-                        ),
-                        HomeCard(
-                          iconWidget: Image.asset(StringConst.kTaskIcon),
-                          title: StringConst.kTasks,
-                          isBudge: true,
-                          budgeNumber: "10",
-                          onTap: () {},
-                        ),
-                        HomeCard(iconWidget: const SizedBox(), title: StringConst.kFollowUpLead, onTap: () {}),
-                        HomeCard(iconWidget: const SizedBox(), title: StringConst.kDueFollowUpLead, onTap: () {}),
-                      ]),
-                ),
+                //Grid View for 4 options.
+                Obx(() {
+                  return Expanded(
+                    child: GridView.count(
+                        primary: false,
+                        padding: const EdgeInsets.all(20),
+                        crossAxisSpacing: 30,
+                        mainAxisSpacing: 30,
+                        crossAxisCount: 2,
+                        children: <Widget>[
+                          HomeCard(
+                            iconWidget: Hero(tag: StringConst.kLeadTag, child: Image.asset(StringConst.kLeadIcon)),
+                            title: StringConst.kLeads,
+                            isBudge: true,
+                            budgeNumber: "${appCommonController.leadCount.value}",
+                            onTap: () => Get.toNamed(RouteConst.kLeadScreen),
+                          ),
+                          HomeCard(
+                            iconWidget: Image.asset(StringConst.kTaskIcon),
+                            title: StringConst.kTasks,
+                            isBudge: true,
+                            budgeNumber: "10",
+                            onTap: () {},
+                          ),
+                          HomeCard(iconWidget: const SizedBox(), title: StringConst.kFollowUpLead, onTap: () {}),
+                          HomeCard(iconWidget: const SizedBox(), title: StringConst.kDueFollowUpLead, onTap: () {}),
+                        ]),
+                  );
+                }),
               ],
             ),
           )
@@ -92,6 +106,69 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+//UserInfo (Image Name-SubTitle-EditIcon)
+class UserInfo extends StatelessWidget {
+  UserInfo({super.key});
+
+  AppCommonController appCommonController = Get.find();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        //Profile Image
+        Padding(
+          padding: const EdgeInsets.only(left: 5),
+          child: Hero(
+            tag: StringConst.kProfileTag,
+            child: Obx(() {
+              return ClipRRect(
+                borderRadius: BorderRadius.circular(Get.width / 3),
+                child: appCommonController.currentImagePath.value == ''
+                    ? Image.asset(
+                        StringConst.kProfileImage,
+                        height: Get.width / 6,
+                        width: Get.width / 6,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.file(
+                        File(appCommonController.currentImagePath.value),
+                        height: Get.width / 6,
+                        width: Get.width / 6,
+                        fit: BoxFit.cover,
+                      ),
+              );
+            }),
+          ),
+        ),
+        WidgetConst.kWidthSpacer(widthMultiplier: 0.5),
+
+        //Name and Subtitle
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            WidgetConst.kDefaultText(
+                textString: "GAURAV VEKARIYA",
+                textStyle: StyleConst.kHighLight216.copyWith(fontWeight: FontWeight.bold)),
+            WidgetConst.kDefaultText(textString: "ABC", textStyle: StyleConst.kHighLight214),
+          ],
+        ),
+        const Spacer(),
+
+        //Edit Icon
+        InkWell(
+          onTap: () => Get.toNamed(RouteConst.kProfileScreen),
+          child: Image.asset(
+            StringConst.kPencilIcon,
+            fit: BoxFit.cover,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+//Home Card have 5 properties (1-Icon Widget, 2-title of card,3-show budge on card,4-budge number,5-onTap Function)
 class HomeCard extends StatelessWidget {
   const HomeCard(
       {super.key,

@@ -1,20 +1,32 @@
 import 'package:demo_flutter/model/login/LoginResponse.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class AppCommonController extends GetxController {
   RxString currentImagePath = "".obs;
   Rx<LoginResponse> currentUser = LoginResponse().obs;
   RxList leadData = [].obs;
+  RxList tempLeadData = [].obs;
+  RxInt leadCount = 0.obs;
+  RxBool isSort = false.obs;
 
   sortLeadDataByFormatDate() {
-    print("Starting Sort");
+    isSort.value = true;
     for (int i = 0; i < leadData.length; i++) {
-      // leadData[i]['followDate'] = DateTime.parse(leadData[i]['followDate']).toString();
-      leadData[i]['followDate'].sort((a, b) {
-        return a.compareTo(b);
+      leadData[i]['followDate'] = DateFormat("yyyy-MM-dd").format(DateTime.parse(leadData[i]['followDate'].toString()));
+      leadData.sort((a, b) {
+        return a['followDate'].compareTo(b['followDate']);
       });
     }
+    print(leadData);
+  }
 
-    print(DateTime.parse('2020-01-02'));
+  resetLeadData() {
+    isSort.value = false;
+    for (int i = 0; i < leadData.length; i++) {
+      leadData.sort((a, b) {
+        return a['customer_id'].compareTo(b['customer_id']);
+      });
+    }
   }
 }

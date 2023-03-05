@@ -24,8 +24,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
   bool isLoading = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(),
       body: Stack(
         children: [
+          //Background Green Effect
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -58,6 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           ),
+
+          //Login Form Card  - Email, Password
           Card(
             margin:
                 EdgeInsets.only(top: Get.height / 5, left: SizeConst.kDefaultPadding, right: SizeConst.kDefaultPadding),
@@ -86,6 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
                       WidgetConst.kHeightSpacer(),
+
+                      //Password
                       CustomTextField(
                         title: StringConst.kPassword,
                         keyBoardType: TextInputType.text,
@@ -150,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     } else {
       setState(() => isLoading = !isLoading);
-      //Demo Account is :a@a.com / Test@123
+      //Demo Account is : practical.clumpcrm@gmail.com / 1234
       String email = _emailController.text;
       String password = _passwordController.text;
       PostApiCall postApiCall = PostApiCall();
@@ -162,7 +173,9 @@ class _LoginScreenState extends State<LoginScreen> {
         print('LOGIN -------->');
         await Preferences.setLogin(true);
         Get.offAllNamed(RouteConst.kHomeScreen);
-      } else {}
+      } else {
+        WidgetConst.kSnackBar(title: "Error !", subTitle: response.toString());
+      }
     }
     _formKey.currentState!.save();
   }

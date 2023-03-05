@@ -40,12 +40,15 @@ dependencies:
 
   #Services
   path: ^1.8.2
+  file_picker: ^5.2.5
+  image_picker: ^0.8.6+3
 
   #State-Management
   get: ^4.6.5
 
   #Network
   http: ^0.13.5
+  cached_network_image: ^3.2.0
 
 dev_dependencies:
   flutter_test:

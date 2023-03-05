@@ -1,7 +1,13 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: avoid_print
+
+import 'dart:io';
+
+import 'package:demo_flutter/controller/app_common_controller.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:demo_flutter/utils/constant/colors.dart';
 import 'package:demo_flutter/utils/constant/sizes.dart';
+import 'package:image_picker/image_picker.dart';
 
 //Widget const class define pre-define (default) widget used in app.
 class WidgetConst {
@@ -69,4 +75,66 @@ class WidgetConst {
       );
 
   static Duration duration() => const Duration(milliseconds: 100);
+
+  static void gallerySelectionSheet(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          print("--------> gallerySelectionSheet");
+          return Container(
+            color: ThemeConst.kHighLight2White,
+            child: SafeArea(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: const Icon(Icons.camera_alt),
+                    title: const Text('Take a Photo'),
+                    onTap: () async {
+                      Navigator.pop(context);
+                      WidgetConst().openSystemImagePicker('camera', context);
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.image),
+                    title: const Text('Pick Image from gallery'),
+                    onTap: () async {
+                      Navigator.pop(context);
+                      WidgetConst().openSystemImagePicker('gallery', context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  void openSystemImagePicker(photoType, BuildContext context) async {
+    String profileImgPath = '';
+    final AppCommonController appCommonController = Get.put(AppCommonController());
+    print("--------> openSystemImagePicker");
+
+    try {
+      final ImagePicker picker = ImagePicker();
+      ImageSource source = ImageSource.gallery;
+      if (photoType == 'camera') source = ImageSource.camera;
+
+      final pickedFile = await picker.pickImage(source: source);
+      if (pickedFile != null) {
+        //IF you want to crop image uncomment below and comment remain one
+        // profileImgPath = await _cropImage(pickedFile, context);
+        profileImgPath = File(pickedFile.path).path;
+        print(profileImgPath);
+        appCommonController.currentImagePath.value = profileImgPath;
+      } else {
+        WidgetConst.kSnackBar(title: "No Image Selected", subTitle: "Please Select Image");
+        appCommonController.currentImagePath.value = "";
+      }
+    } catch (e) {
+      print(e);
+      WidgetConst.kSnackBar(title: "Error !", subTitle: "$e");
+      appCommonController.currentImagePath.value = "";
+    }
+  }
 }

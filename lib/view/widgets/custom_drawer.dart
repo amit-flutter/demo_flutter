@@ -55,7 +55,7 @@ class CustomDrawer extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   await Preferences.setLogin(false);
-                  Get.offAllNamed(RouteConst.kRegister);
+                  Get.offAllNamed(RouteConst.kLogin);
                 },
                 style: ElevatedButton.styleFrom(
                     foregroundColor: ThemeConst.kHighLight2White,

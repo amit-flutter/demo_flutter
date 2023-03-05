@@ -3,7 +3,6 @@
 import 'package:demo_flutter/utils/constant/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:demo_flutter/controller/network/api.dart';
 import 'package:demo_flutter/utils/constant/colors.dart';
 import 'package:demo_flutter/utils/constant/strings.dart';
 import 'package:demo_flutter/utils/constant/style.dart';
@@ -32,12 +31,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Stack(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(height: Get.height / 3.5, color: ThemeConst.kHighLight1),
+              Container(height: Get.height / 3.8, color: ThemeConst.kHighLight1),
               Expanded(child: Container(color: ThemeConst.kHighLight2)),
             ],
           ),
@@ -48,7 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                WidgetConst.kHeightSpacer(heightMultiplier: 6),
+                WidgetConst.kHeightSpacer(heightMultiplier: 2),
                 WidgetConst.kDefaultText(
                     textString: StringConst.kSignUp, textStyle: WidgetConst.kHighLight2Bold16.copyWith(fontSize: 35)),
                 WidgetConst.kHeightSpacer(),
@@ -59,8 +59,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ),
           Card(
-            margin: EdgeInsets.only(
-                top: Get.height / 3.7, left: SizeConst.kDefaultPadding, right: SizeConst.kDefaultPadding),
+            margin:
+                EdgeInsets.only(top: Get.height / 5, left: SizeConst.kDefaultPadding, right: SizeConst.kDefaultPadding),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             elevation: 10,
             child: Padding(
@@ -148,10 +148,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                           ),
                           WidgetConst.kHeightSpacer(heightMultiplier: 2),
-                          WidgetConst.kDefaultText(
-                              textString: StringConst.kIndicatesMandatoryField,
-                              textStyle: StyleConst.kHighLight1Normal.copyWith(fontSize: 12)),
-                          WidgetConst.kHeightSpacer(heightMultiplier: 0.5),
                           CustomElevatedButton(
                               title: "Sign Up",
                               backColor: ThemeConst.kHighLight1,
@@ -160,17 +156,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               onClick: () => _submitButtonFunction()),
 
                           WidgetConst.kHeightSpacer(heightMultiplier: 1.5),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              WidgetConst.kDefaultText(
-                                  textString: StringConst.kHaveAnAccount,
-                                  textStyle: StyleConst.kBlack18Normal.copyWith(fontSize: 12)),
-                              WidgetConst.kDefaultText(
-                                  textString: StringConst.kSignIn,
-                                  textStyle: StyleConst.kHighLight1Normal.copyWith(fontSize: 12)),
-                            ],
+                          InkWell(
+                            onTap: () => Get.back(),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                WidgetConst.kDefaultText(
+                                    textString: StringConst.kHaveAnAccount,
+                                    textStyle: StyleConst.kBlack18Normal.copyWith(fontSize: 12)),
+                                WidgetConst.kDefaultText(
+                                    textString: StringConst.kSignIn,
+                                    textStyle: StyleConst.kHighLight1Normal.copyWith(fontSize: 12)),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -194,30 +193,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // _globalController.isLoading.value = true;
       String email = _emailController.text;
       // String password = _passwordController.text;
-      if (email.contains("karmaleen")) {
-        WidgetConst.kSnackBar(
-            title: "Welcome $email", subTitle: "Please Turn on time before start working.\nHave a good day 😃");
-        Get.toNamed(RouteConst.kHomeScreen);
-      } else {
-        WidgetConst.kSnackBar(
-          title: "Hello $email",
-          subTitle: "Your email is not register with us please contact manager or visit karmaleen.com",
-          color: ThemeConst.kRed.withOpacity(0.2),
-        );
-      }
-      String check = await PostDataProcess().sendData(
-          _firstNameController.text,
-          _lastNameController.text,
-          _emailController.text,
-          _mobileNumberController.text,
-          _passwordController.text,
-          _confirmPasswordController.text);
-      print(check);
-      if (check == StringConst.kSuccess) {
-        print('Working');
-        await Preferences.setLogin(true);
-        Get.offAllNamed(RouteConst.kHomeScreen);
-      } else {}
+      // String check = await PostDataProcess().sendData(
+      //     _firstNameController.text,
+      //     _lastNameController.text,
+      //     _emailController.text,
+      //     _mobileNumberController.text,
+      //     _passwordController.text,
+      //     _confirmPasswordController.text);
+      // print(check);
+      // if (check == StringConst.kSuccess) {
+      //   print('Working');
+      //   await Preferences.setLogin(true);
+      //   Get.offAllNamed(RouteConst.kHomeScreen);
+      // } else {}
     }
     _formKey.currentState!.save();
   }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:demo_flutter/controller/app_common_controller.dart';
 import 'package:demo_flutter/utils/constant/colors.dart';
 import 'package:demo_flutter/utils/constant/strings.dart';
 import 'package:demo_flutter/utils/route.dart';
@@ -22,10 +23,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void setup() async {
+    //Initialize App Common Controller
+    AppCommonController _ = Get.put(AppCommonController());
+
+    //Get User Login Status from Shared Preference
     bool isLogin = await Preferences.isLogin();
 
     //After 2 seconds Splash screen remove and new screen will be added.(Control transfer from one to another)
-    Timer(const Duration(seconds: 2), () => Get.offAllNamed(isLogin ? RouteConst.kHomeScreen : RouteConst.kRegister));
+    Timer(const Duration(seconds: 2), () => Get.offAllNamed(isLogin ? RouteConst.kHomeScreen : RouteConst.kLogin));
   }
 
   @override

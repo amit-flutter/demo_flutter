@@ -37,7 +37,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         controller: widget.textFieldController,
         decoration: InputDecoration(
           //  labelText: widget.title,
-          hintText: "${widget.title}*",
+          hintText: widget.title,
 
           // hintStyle: WidgetConst.kHighLightDark18.copyWith(color: Colors.grey),
           suffixIcon: widget.isSuffixIcon

@@ -4,7 +4,7 @@ import 'package:demo_flutter/utils/constant/style.dart';
 //ThemeConst class will contain all color and theme info.
 class ThemeConst {
   static const Color kDarkBackGround = Color.fromRGBO(55, 58, 69, 1);
-  static const Color kLightBackGround = Color.fromRGBO(241, 241, 241, 1);
+  static const Color kLightBackGround = Color(0xfaffffff);
 
   static const Color kHighLight1 = Color(0xFF60A053);
   static const Color kHighLight2 = Color(0xfaffffff);
@@ -18,7 +18,8 @@ class ThemeConst {
 
   static const Color kHighLight2White = Colors.white;
   static const Color kHighLight3Black = Color.fromRGBO(0, 0, 0, 1);
-  static const Color kHighLight4DarkGray = Color.fromRGBO(137, 145, 173, 1);
+  static const Color kHighLight4DarkGray = Color(0xFFD4D4D4);
+  static const Color kHighLight6LightGray = Color(0xFFF9F9F9);
   static const Color kHighLight5LightBlue = Color.fromRGBO(160, 174, 225, 1);
 
   //Light Theme data is define here

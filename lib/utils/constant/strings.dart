@@ -7,6 +7,14 @@ class StringConst {
   static const String kPencilIcon = 'assets/pencil.png';
   static const String kLeadIcon = 'assets/lead.png';
   static const String kTaskIcon = 'assets/task.png';
+  static const String kProfileImage = 'assets/profile.png';
+  static const String kSortIcon = 'assets/sort.png';
+
+  //Login Screen
+  static const String kLogin = 'Login';
+  static const String kWelcomeBack = 'Welcome Back';
+  static const String kForgotPassword = 'Forgot Password?';
+  static const String kNotAccountMessage = "Don't have an account? Sign up";
 
   //Registration Screen
   static const String kSignUp = 'Sign Up';
@@ -15,7 +23,6 @@ class StringConst {
   static const String kPleaseEnter = 'Please enter';
 
   static const String kFullName = 'Full Name';
-  static const String kLastName = 'Last Name';
   static const String kEmailAddress = 'Email Address';
   static const String kValidEmailAddress = 'a valid email address';
   static const String kMobileNumber = 'Mobile Number';
@@ -26,8 +33,9 @@ class StringConst {
   static const String kConfirmPassword = 'Confirm Password';
   static const String kValidConfirmPassword = 'The password entered doesn\'t match';
 
-  static const String kIndicatesMandatoryField = '* Indicates Mandatory Field';
-  static const String kHaveAnAccount = 'Have an account?';
+  static const String kCompanyName = 'CompanyName';
+
+  static const String kHaveAnAccount = 'Have an account? ';
 
   static const String kSuccess = 'Success';
 
@@ -40,4 +48,10 @@ class StringConst {
   //Drawer
   static const String kChangePassword = 'Change Password';
   static const String kLogout = 'Logout';
+
+  //Profile
+  static const String kProfileTag = 'Profile';
+  static const String kLeadTag = 'Lead';
+  static const String kSubmit = 'Submit';
+  static const String kCancel = 'Cancel';
 }

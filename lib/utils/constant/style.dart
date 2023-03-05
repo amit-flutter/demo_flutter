@@ -20,4 +20,7 @@ class StyleConst {
 
   static const TextStyle kHighLight216 = TextStyle(fontSize: 16, color: ThemeConst.kHighLight2White);
   static const TextStyle kHighLight214 = TextStyle(fontSize: 14, color: ThemeConst.kHighLight2White);
+
+  static const TextStyle kHighLight4DarkGray14 = TextStyle(fontSize: 14, color: ThemeConst.kHighLight4DarkGray);
+  static const TextStyle kHighLight4DarkGray16 = TextStyle(fontSize: 16, color: ThemeConst.kHighLight4DarkGray);
 }

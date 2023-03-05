@@ -38,8 +38,9 @@ class CustomElevatedButton extends StatelessWidget {
             )
           : OutlinedButton(
               onPressed: () => onClick(),
-              style: OutlinedButton.styleFrom(side: const BorderSide(width: 2.0, color: ThemeConst.kHighLight1)),
-              child: WidgetConst.kDefaultText(textString: title, textStyle: StyleConst.kTeal18Normal),
+              style: OutlinedButton.styleFrom(side: const BorderSide(width: 1, color: ThemeConst.kHighLight1)),
+              child: WidgetConst.kDefaultText(
+                  textString: title, textStyle: StyleConst.kBlack18Normal.copyWith(fontWeight: FontWeight.normal)),
             ),
     );
   }
